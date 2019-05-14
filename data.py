@@ -3,6 +3,7 @@ from torch.utils.data import dataset, dataloader
 from torchvision.datasets.folder import default_loader
 from utils.RandomErasing import RandomErasing
 from utils.RandomSampler import RandomSampler
+from utils.AL_Market1501 import AlMarket1501
 from opt import opt
 import os
 import re
@@ -24,7 +25,10 @@ class Data():
             transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
         ])
 
-        self.trainset = Market1501(train_transform, 'train', opt.data_path)
+        # self.trainset = Market1501(train_transform, 'train', opt.data_path)
+
+        self.trainset = AlMarket1501(train_transform, 'train', opt.data_path)
+
         self.testset = Market1501(test_transform, 'test', opt.data_path)
         self.queryset = Market1501(test_transform, 'query', opt.data_path)
 
