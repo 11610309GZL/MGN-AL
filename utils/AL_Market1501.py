@@ -9,6 +9,7 @@ import re
 
 
 
+
 class AlMarket1501(dataset.Dataset):
     def __init__(self, transform, dtype, data_path):
 
@@ -107,5 +108,13 @@ class AlMarket1501(dataset.Dataset):
         unlabled = list(set(all_images) - set(labeled))
 
         return labeled, unlabled
+
+    def addLabeled(self):
+
+        # choose some valuable data
+        new_labeled_data = self.unlabeled[0:10]
+        self.imgs.extend(new_labeled_data)
+        self.unlabeled = list(set(self.unlabeled) - set(new_labeled_data))
+
 
 

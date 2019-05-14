@@ -146,6 +146,11 @@ if __name__ == '__main__':
         for epoch in range(1, opt.epoch + 1):
             print('\nepoch', epoch)
             main.train()
+
+            # AL process change train set
+            if epoch % 2 == 0:
+                data.trainset.addLabeled();
+
             if epoch % 10 == 0:   #50
                 print('\nstart evaluate')
                 main.evaluate()
