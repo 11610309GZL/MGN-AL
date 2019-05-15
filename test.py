@@ -33,6 +33,13 @@
 #     for (data, label) in testdataloader:
 #         print("data: {} label: {}".format(data, label))
 
-a = ['1', '2']
-a.remove('1')
+import torch
+
+a = torch.FloatTensor(2,3)
 print(a)
+
+a_n = a.numpy()
+a_n = a_n.T;
+a = torch.from_numpy(a_n)
+for i in a:
+    print(i)

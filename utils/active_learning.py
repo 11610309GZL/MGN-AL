@@ -1,6 +1,11 @@
 import collections
 import os
 import re
+import tqdm
+import torch
+from utils.extract_feature import extract_feature
+import numpy as np
+
 
 def list_pictures(directory, ext='jpg|jpeg|bmp|png|ppm|npy'):
     assert os.path.isdir(directory), 'dataset is not exists!{}'.format(directory)
@@ -60,7 +65,36 @@ def divide_trainset (unique_ids, all_images_path):
 
     return labeled_path, unlabled_path
 
-def addLabeled(train_loader, unlabeled_loader):
+def addLabeled(model, train_loader, unlabeled_loader):
+    model.eval()
+
+    # (choosen_data, _i) = train_loader[0]
+
+    query_feature = extract_feature(model, tqdm(train_loader))
+    gallery_feature = extract_feature(model, tqdm(unlabeled_loader))
+
+    query_feature_numpy = query_feature.numpy()
+    query_feature_numpy = query_feature_numpy.T
+    query_feature = torch.from_numpy(query_feature_numpy)
+    # sort images
+    # query_feature = query_feature.view(-1, 1)
+    score = torch.mm(gallery_feature, query_feature)
+    score = score.squeeze(1).cpu()
+    score = score.numpy()
+
+    # index = np.argsort(score)  # from small to large
+    # index = index[::-1]  # from large to small
+    # min = 100;
+    # linenum = 0;
+    # min_linenum = 0;
+    # min_columnnum = 0;
+    # for line in score:
+    #     index = np.argsort(line)
+    #     index = index[::-1]
+    #     if score[linenum][index[0]] < min:
+    #         min = score[linenum][index[0]]
+    #
+    #     linenum += 1
 
     # choose some valuable data
     new_labeled_data = unlabeled_loader.dataset.imgs[0:10]
