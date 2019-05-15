@@ -18,6 +18,7 @@ from utils.get_optimizer import get_optimizer
 from utils.extract_feature import extract_feature
 from utils.metrics import mean_ap, cmc, re_ranking
 from datetime import datetime
+from utils.active_learning import *
 
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 
@@ -25,6 +26,7 @@ os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 class Main():
     def __init__(self, model, loss, data):
         self.train_loader = data.train_loader
+        self.unlabeled_loader = data.unlabeled_loader
         self.test_loader = data.test_loader
         self.query_loader = data.query_loader
         self.testset = data.testset
@@ -141,6 +143,8 @@ if __name__ == '__main__':
     loss = Loss()
     main = Main(model, loss, data)
 
+    added_imgs = []
+
     if opt.mode == 'train':
         start = datetime.now()
         for epoch in range(1, opt.epoch + 1):
@@ -149,7 +153,9 @@ if __name__ == '__main__':
 
             # AL process change train set
             if epoch % 2 == 0:
-                data.trainset.addLabeled();
+                new_imgs = addLabeled(main.train_loader, main.unlabeled_loader)
+                added_imgs.extend(new_imgs)
+                print(added_imgs)
 
             if epoch % 10 == 0:   #50
                 print('\nstart evaluate')

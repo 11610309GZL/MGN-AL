@@ -11,15 +11,21 @@ class RandomSampler(sampler.Sampler):
         self.batch_image = batch_image
         self.batch_id = batch_id
 
-        #字典，人的ID映射图片ID列表
-        self._id2indexlist = collections.defaultdict(list)
-        for idx, path in enumerate(data_source.imgs):
-            _id = data_source.id(path)
-            self._id2indexlist[_id].append(idx)
+        # #字典，人的ID映射图片index列表
+        # self._id2indexlist = collections.defaultdict(list)
+        # for idx, path in enumerate(data_source.imgs):
+        #     _id = data_source.id(path)
+        #     self._id2indexlist[_id].append(idx)
 
     def __iter__(self):
         unique_ids = self.data_source.unique_ids
         random.shuffle(unique_ids)
+
+        # 字典，人的ID映射图片index列表
+        self._id2indexlist = collections.defaultdict(list)
+        for idx, path in enumerate(self.data_source.imgs):
+            _id = self.data_source.id(path)
+            self._id2indexlist[_id].append(idx)
 
         imgs = []
         for _id in unique_ids:
