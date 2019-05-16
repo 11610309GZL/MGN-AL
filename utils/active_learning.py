@@ -63,9 +63,9 @@ def divide_trainset (unique_ids, all_images_path):
 def addLabeled(train_loader, unlabeled_loader):
 
     # choose some valuable data
-    new_labeled_data = unlabeled_loader.imgs[0:10]
+    new_labeled_data = unlabeled_loader.dataset.imgs[0:10]
     for new_labeled in new_labeled_data:
-        unlabeled_loader.imgs.remove(new_labeled)
+        unlabeled_loader.dataset.imgs.remove(new_labeled)
 
-    train_loader.imgs.extend(new_labeled_data)
+    train_loader.dataset.imgs.extend(new_labeled_data)
     return new_labeled_data

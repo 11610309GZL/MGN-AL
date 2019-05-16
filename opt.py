@@ -11,7 +11,9 @@ parser.add_argument('--mode',
                     help='train or evaluate ')
 
 parser.add_argument('--query_image',
-                    default='/home/luning/workspace/AL/Reid_dataset/Market-1501-v15.09.15/query/0001_c1s1_001051_00.jpg', # /home/gongzelin/ActiveLearning/Reid_dataset/Market-1501-v15.09.15/query/0001_c1s1_001051_00.jpg
+                    default='/home/gongzelin/ActiveLearning/Reid_dataset/Market-1501-v15.09.15/query/0001_c1s1_001051_00.jpg',
+                    # /home/gongzelin/ActiveLearning/Reid_dataset/Market-1501-v15.09.15/query/0001_c1s1_001051_00.jpg
+                    # /home/luning/workspace/AL/Reid_dataset/Market-1501-v15.09.15/query/0001_c1s1_001051_00.jpg
                     help='path to the image you want to query')
 
 parser.add_argument('--freeze',
@@ -19,7 +21,7 @@ parser.add_argument('--freeze',
                     help='freeze backbone or not ')
 
 parser.add_argument('--weight',
-                    default='weights/model_default.pt',
+                    default='weights/model_300.pt',
                     help='load weights ')
 
 parser.add_argument('--epoch',

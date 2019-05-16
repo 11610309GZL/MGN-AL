@@ -19,6 +19,7 @@ from utils.extract_feature import extract_feature
 from utils.metrics import mean_ap, cmc, re_ranking
 from datetime import datetime
 from utils.active_learning import *
+from data_al import Data_AL
 
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 
@@ -138,7 +139,7 @@ class Main():
 
 if __name__ == '__main__':
 
-    data = Data()
+    data = Data_AL()
     model = MGN()
     loss = Loss()
     main = Main(model, loss, data)
@@ -152,7 +153,7 @@ if __name__ == '__main__':
             main.train()
 
             # AL process change train set
-            if epoch % 2 == 0:
+            if epoch % 1 == 0:
                 new_imgs = addLabeled(main.train_loader, main.unlabeled_loader)
                 added_imgs.extend(new_imgs)
                 print(added_imgs)

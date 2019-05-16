@@ -50,20 +50,20 @@ class AlMarket1501(dataset.Dataset):
         """
         return int(file_path.split('/')[-1].split('_')[1][1])
 
-    @property
-    def ids(self):
-        """
-        :return: person id list corresponding to dataset image paths
-        """
-        # return [self.id(path) for path in self.imgs]
-        return [self.id(path) for path in self.all_imgs]
-
-    @property
-    def unique_ids(self):
-        """
-        :return: unique person ids in ascending order
-        """
-        return sorted(set(self.ids))
+    # @property
+    # def ids(self):
+    #     """
+    #     :return: person id list corresponding to dataset image paths
+    #     """
+    #     # return [self.id(path) for path in self.imgs]
+    #     return [self.id(path) for path in self.all_imgs]
+    #
+    # @property
+    # def unique_ids(self):
+    #     """
+    #     :return: unique person ids in ascending order
+    #     """
+    #     return sorted(set(self.ids))
 
     @property
     def cameras(self):
